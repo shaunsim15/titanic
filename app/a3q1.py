@@ -19,59 +19,59 @@ def closeConnect(connection, crsr):
 def getAllStudents(): 
     connection = None
     try: 
-        connection = connect()
+        connection = connect() # connect to the database
         crsr = connection.cursor()
-        crsr.execute('SELECT * FROM students')
+        crsr.execute('SELECT * FROM students') # execute the SQL query
         print("Students:")
         for student in crsr.fetchall(): # Print each student record fetched by the cursor
             print(student)
     except(Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
-        closeConnect(connection, crsr)
+        closeConnect(connection, crsr) # regardless of whether an error occurs, we want to perform cleanup by closing the cursor and connection
 
 # Inserts a new student record into the students table.
 def addStudent(first_name, last_name, email, enrollment_date): 
     connection = None
     try: 
-        connection = connect()
+        connection = connect() # connect to the database
         crsr = connection.cursor()
         crsr.execute(f"INSERT INTO students (first_name, last_name, email, enrollment_date) VALUES \
-                    ('{first_name}', '{last_name}', '{email}', '{enrollment_date}')")
+                    ('{first_name}', '{last_name}', '{email}', '{enrollment_date}')")  # execute the SQL query
         print(f"{crsr.rowcount} row(s) inserted")
-        connection.commit()
+        connection.commit() # commit and confirm changes (row insertion) made to the database
     except(Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
-        closeConnect(connection, crsr)
+        closeConnect(connection, crsr) # regardless of whether an error occurs, we want to perform cleanup by closing the cursor and connection
 
 # Updates the email address for a student with the specified student_id.
 def updateStudentEmail(student_id, new_email):
     connection = None
     try: 
-        connection = connect()
+        connection = connect() # connect to the database
         crsr = connection.cursor()
-        crsr.execute(f"UPDATE students SET email='{new_email}'WHERE student_id={student_id}")
+        crsr.execute(f"UPDATE students SET email='{new_email}'WHERE student_id={student_id}") # execute the SQL query
         print(f"{crsr.rowcount} row(s) updated")
-        connection.commit()
+        connection.commit() # commit and confirm changes (row update) made to the database
     except(Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
-        closeConnect(connection, crsr)
+        closeConnect(connection, crsr) # regardless of whether an error occurs, we want to perform cleanup by closing the cursor and connection
 
 # Deletes the record of the student with the specified student_id.
 def deleteStudent(student_id): 
     connection = None
     try: 
-        connection = connect()
+        connection = connect() # connect to the database
         crsr = connection.cursor()
-        crsr.execute(f"DELETE FROM students WHERE student_id={student_id}")
+        crsr.execute(f"DELETE FROM students WHERE student_id={student_id}") # execute the SQL query
         print(f"{crsr.rowcount} row(s) deleted")
-        connection.commit()
+        connection.commit() # commit and confirm changes (row deletion) made to the database
     except(Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
-        closeConnect(connection, crsr)
+        closeConnect(connection, crsr) # regardless of whether an error occurs, we want to perform cleanup by closing the cursor and connection
 
 
 if __name__ == "__main__":
